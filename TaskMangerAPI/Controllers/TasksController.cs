@@ -30,7 +30,7 @@ namespace TaskMangerAPI.Controllers
         public ActionResult<TaskItems> CreateTask([FromBody] CreateTaskDto newTaskDto)
         {
             int newId = tasks.Count > 0 ? tasks[^1].Id + 1 : 1;
-            var task= new TaskItems
+            var task = new TaskItems
             {
                 Id = newId,
                 Title = newTaskDto.Title,
@@ -39,6 +39,18 @@ namespace TaskMangerAPI.Controllers
             };
             tasks.Add(task);
             return CreatedAtAction(nameof(GetTasks), new { id = task.Id }, task);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult<TaskItems> UpdateTask(int id, [FromBody] UpdateTaskDto updateTaskdto)
+        {
+            var task = tasks.Find(t => t.Id == id);
+            if(task==null)
+                return NotFound();
+            task.Title = updateTaskdto.Title;
+            task.Description = updateTaskdto.Description;
+            tasks.Add(task);
+            return Ok(task);
         }
 
     }
