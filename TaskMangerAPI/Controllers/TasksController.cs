@@ -52,6 +52,16 @@ namespace TaskMangerAPI.Controllers
             tasks.Add(task);
             return Ok(task);
         }
+        //Delete
+        [HttpDelete("{id}")]
+        public ActionResult DeleteTask(int id)
+        {
+            var task = tasks.Find(t => t.Id == id);
+            if (task == null)
+                return NotFound();
+            tasks.Remove(task);
+            return NoContent();
+        }
 
     }
 }
