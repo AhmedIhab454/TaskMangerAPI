@@ -15,7 +15,6 @@ namespace TaskMangerAPI.Controllers
         new TaskItems { Id = 1, Title = "First Task", Description = "This is the first task", IsCompleted = false },
         new TaskItems { Id = 2, Title = "Second Task", Description = "This is the second task", IsCompleted = true }
 
-
         };
 
         //Get
@@ -62,6 +61,16 @@ namespace TaskMangerAPI.Controllers
             tasks.Remove(task);
             return NoContent();
         }
+        //GetById
 
+        [HttpGet("{id}")]
+        public ActionResult GetTask(int id) 
+        { 
+            var task = tasks.Find(t => t.Id == id);
+            if (task == null)
+                return NotFound();
+            return Ok(task);
+
+        }
     }
 }
